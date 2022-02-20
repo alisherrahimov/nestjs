@@ -29,7 +29,7 @@ export class Book {
   @Column()
   description: string;
 
-  @Column('double')
+  @Column('varchar')
   price: number;
 
   @Column('integer')

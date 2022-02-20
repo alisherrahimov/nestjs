@@ -22,7 +22,7 @@ export class Review {
   @OneToOne(() => User, (user) => user.review)
   user_id: User;
 
-  @Column('double')
+  @Column('varchar')
   rating: number;
 
   @Column({ type: 'timestamp', update: true })

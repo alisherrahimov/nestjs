@@ -19,33 +19,45 @@ export class User {
   @Column({ enum: ['user', 'admin'], default: 'user' })
   role: string;
 
-  @Column({ type: 'timestamp' })
+  @Column({ type: 'date' })
   born_date: Date;
 
   @Column('varchar')
   location: string;
 
-  @Column('varchar')
+  @Column('varchar', {
+    nullable: true,
+    default:
+      'https://png.pngtree.com/png-clipart/20190924/original/pngtree-user-vector-avatar-png-image_4830521.jpg',
+  })
   avatar: string;
 
   //   @Column('varchar')
   //   history: string;
 
-  @OneToOne(() => Fovarite, (fovarite) => fovarite.id)
+  @OneToOne(() => Fovarite, (fovarite) => fovarite.id, {
+    nullable: true,
+    onDelete: 'NO ACTION',
+    onUpdate: 'NO ACTION',
+  })
   fovarite: Fovarite[];
 
-  @OneToOne(() => Review, (review) => review.user_id)
+  @OneToOne(() => Review, (review) => review.user_id, {
+    nullable: true,
+    onDelete: 'NO ACTION',
+    onUpdate: 'NO ACTION',
+  })
   review: Review[];
 
   @Column({ enum: ['male', 'female'], type: 'varchar' })
   gender: string;
 
-  @Column({ type: 'double', default: 0, nullable: true })
+  @Column({ type: 'varchar', default: 0, nullable: true })
   amount: number;
 
-  @Column({ type: 'time with time zone', update: true })
-  update_at: Date;
+  @Column({ type: 'time with time zone', nullable: true, update: true })
+  update_at?: Date;
 
-  @Column({ default: () => 'CURRENT_TIMESTAMP', type: 'time with time zone' })
-  create_at: Date;
+  @Column({ default: () => 'CURRENT_TIMESTAMP', type: 'timestamp' })
+  create_at?: Date;
 }
