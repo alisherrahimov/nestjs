@@ -1,9 +1,11 @@
 import {
   Column,
+  CreateDateColumn,
   Entity,
   ManyToMany,
   OneToOne,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { Book } from './book.entity';
 import { User } from './user.entity';
@@ -25,9 +27,9 @@ export class Review {
   @Column('varchar')
   rating: number;
 
-  @Column({ type: 'timestamp', update: true })
-  update_at: Date;
+  @UpdateDateColumn()
+  updateAt: Date;
 
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  create_at: Date;
+  @CreateDateColumn()
+  createAt: Date;
 }

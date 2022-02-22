@@ -1,4 +1,11 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { Book } from './book.entity';
 
 @Entity()
@@ -12,12 +19,12 @@ export class Category {
   @Column('varchar')
   image: string;
 
-  @ManyToOne(() => Book, (book) => book.category, { nullable: true })
+  @ManyToOne(() => Book, (book) => book.category)
   book: Book;
 
-  @Column({ type: 'timestamp', update: true })
-  update_at: Date;
+  @UpdateDateColumn()
+  updatedAt: Date;
 
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  create_at: Date;
+  @CreateDateColumn()
+  createAt: Date;
 }

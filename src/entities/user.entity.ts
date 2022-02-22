@@ -1,4 +1,10 @@
-import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { Fovarite } from './fovarite.entity';
 import { Review } from './review.entity';
 
@@ -32,22 +38,18 @@ export class User {
   })
   avatar: string;
 
-  //   @Column('varchar')
-  //   history: string;
-
   @OneToOne(() => Fovarite, (fovarite) => fovarite.id, {
     nullable: true,
-    onDelete: 'NO ACTION',
-    onUpdate: 'NO ACTION',
   })
   fovarite: Fovarite[];
 
   @OneToOne(() => Review, (review) => review.user_id, {
     nullable: true,
-    onDelete: 'NO ACTION',
-    onUpdate: 'NO ACTION',
   })
   review: Review[];
+
+  @Column('json', { nullable: true })
+  interesting: string[];
 
   @Column({ enum: ['male', 'female'], type: 'varchar' })
   gender: string;
@@ -55,9 +57,9 @@ export class User {
   @Column({ type: 'varchar', default: 0, nullable: true })
   amount: number;
 
-  @Column({ type: 'time with time zone', nullable: true, update: true })
-  update_at?: Date;
+  @CreateDateColumn()
+  updateAt: Date;
 
-  @Column({ default: () => 'CURRENT_TIMESTAMP', type: 'timestamp' })
-  create_at?: Date;
+  @CreateDateColumn()
+  createAt: Date;
 }

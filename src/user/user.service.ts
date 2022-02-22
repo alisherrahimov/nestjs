@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/entities/user.entity';
 import { Repository } from 'typeorm';
@@ -69,7 +69,7 @@ export class UserService {
       const { access_token } = await this.login({ email, password });
       return { access_token: access_token, success: true };
     } catch (e: any) {
-      return { message: 'Internal Server Error', success: false, error: e };
+      throw new HttpException('Internal Server Error', 500);
     }
   }
 
@@ -95,7 +95,7 @@ export class UserService {
         return { message: 'Password incorrect', success: false };
       }
     } catch (error) {
-      return { message: 'Internal Server Error', success: false, error: error };
+      throw new HttpException('Internal Server Error', 500);
     }
   }
 
@@ -128,6 +128,34 @@ export class UserService {
     try {
       const findUser = await this.user.findOne({ email: email });
       return { message: 'Password changed successfully', success: true };
-    } catch (error) {}
+    } catch (error) {
+      throw new HttpException('Internal Server Error', 500);
+    }
+  }
+
+  //get user data in system
+  async getMe(id: string): Promise<User> {
+    try {
+      const findUser = await this.user.findOne({ id: id });
+      return findUser;
+    } catch (error) {
+      throw new HttpException('Internal Server Error', 500);
+    }
+  }
+
+  async userInteresting(id: string, array: string[]): Promise<SuccessDto> {
+    try {
+      const findUser = await this.user.findByIds([id]);
+      if (findUser.length === 0) {
+        return { message: 'User not found', success: false };
+      }
+      array.forEach((element) => {
+        findUser[0].interesting.push(element);
+      });
+      await this.user.save(findUser[0]);
+      return { message: 'Interesting added successfully', success: true };
+    } catch (error) {
+      throw new HttpException('Internal Server Error', 500);
+    }
   }
 }

@@ -1,10 +1,12 @@
 import {
   Column,
+  CreateDateColumn,
   Entity,
   ManyToOne,
   OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { Book } from './book.entity';
 import { User } from './user.entity';
@@ -20,9 +22,9 @@ export class Fovarite {
   @OneToMany(() => Book, (book) => book.fovarite, { nullable: true })
   book: Book[];
 
-  @Column({ type: 'timestamp', update: true })
-  update_at: Date;
+  @UpdateDateColumn()
+  updateAt: Date;
 
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  create_at: Date;
+  @CreateDateColumn()
+  createAt: Date;
 }

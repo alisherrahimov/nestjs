@@ -26,6 +26,10 @@ export class UserModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(CheckTokenMiddleware)
-      .forRoutes({ path: '*', method: RequestMethod.POST });
+      .exclude(
+        { path: 'me', method: RequestMethod.GET },
+        { path: 'image', method: RequestMethod.POST },
+      )
+      .forRoutes(UserController);
   }
 }

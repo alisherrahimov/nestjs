@@ -86,7 +86,23 @@ export class UserController {
     return await this.UserService.uploadImage(image, id);
   }
 
+  //get user data in system
+  @Get('me')
+  async getMe(@Req() req: { id: string }): Promise<User> {
+    const { id } = req;
+    return await this.UserService.getMe(id);
+  }
+
   async changePassword(@Body() email: string): Promise<SuccessDto> {
     return await this.UserService.changePassword(email);
+  }
+
+  //user interesting
+  async getInteresting(
+    @Req() req: { id: string },
+    @Body() array: string[],
+  ): Promise<SuccessDto> {
+    const { id } = req;
+    return this.UserService.userInteresting(id, array);
   }
 }
