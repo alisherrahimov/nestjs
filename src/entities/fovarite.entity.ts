@@ -2,6 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToMany,
   ManyToOne,
   OneToMany,
   OneToOne,
@@ -16,8 +17,8 @@ export class Fovarite {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @OneToOne(() => User, (user) => user.id, { nullable: true })
-  user_id: User;
+  @ManyToMany(() => User, (user) => user.fovarite, { nullable: true })
+  user: User;
 
   @OneToMany(() => Book, (book) => book.fovarite, { nullable: true })
   book: Book[];

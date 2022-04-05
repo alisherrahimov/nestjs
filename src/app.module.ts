@@ -12,7 +12,12 @@ import { CategoryModule } from './category/category.module';
 import config from '../ormconfig';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(config), UserModule, BookModule, CategoryModule],
+  imports: [
+    TypeOrmModule.forRoot(config),
+    UserModule,
+    BookModule,
+    CategoryModule,
+  ],
   controllers: [AppController, UserController, CategoryController],
   providers: [AppService, UserService, CategoryService],
 })

@@ -10,46 +10,48 @@ import {
 import { Category } from './category.entity';
 import { Fovarite } from './fovarite.entity';
 import { Review } from './review.entity';
-
+import { ApiProperty } from '@nestjs/swagger';
 @Entity()
 export class Book {
+  @ApiProperty({ title: 'id', description: 'id of book' })
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ length: 50, type: 'varchar' })
+  @ApiProperty({ title: 'title', description: 'title of book' })
+  @Column({ type: 'text' })
   book_name: string;
 
-  @Column('varchar')
+  @Column({ type: 'text' })
   image: string;
 
-  @Column('varchar')
+  @Column({ type: 'text' })
   author: string;
 
   @Column({ type: 'integer' })
   down_count: number;
 
-  @Column()
+  @Column({ type: 'text' })
   description: string;
 
-  @Column('varchar')
+  @Column({ type: 'float' })
   price: number;
 
-  @Column('integer')
+  @Column({ type: 'integer' })
   page: number;
 
-  @Column('varchar')
+  @Column({ type: 'text' })
   download_link: string;
 
-  @Column()
+  @Column({ type: 'text' })
   audio_link: string;
 
-  @Column('integer')
+  @Column({ type: 'text' })
   audio_duration: string;
 
   @Column({ enum: ['free', 'paid'], default: 'free' })
   type: string;
 
-  @OneToMany(() => Category, (category) => category.id, { nullable: false })
+  @OneToMany(() => Category, (category) => category.book, { nullable: true })
   category: Category[];
 
   @OneToMany(() => Review, (review) => review.book, { nullable: true })

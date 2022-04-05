@@ -2,7 +2,9 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   ManyToMany,
+  ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -21,10 +23,10 @@ export class Review {
   @ManyToMany(() => Book, (book) => book.review)
   book: Book;
 
-  @OneToOne(() => User, (user) => user.review)
-  user_id: User;
+  @ManyToOne(() => User, (user) => user.review)
+  user: User;
 
-  @Column('varchar')
+  @Column({ type: 'float' })
   rating: number;
 
   @UpdateDateColumn()

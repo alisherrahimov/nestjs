@@ -11,15 +11,14 @@ import {
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
 import { User } from 'src/entities/user.entity';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import { SuccessDto } from './dto/success.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
+import { UpdateDto } from './dto/update.dto';
 
-@ApiTags('users')
 @Controller('users')
 export class UserController {
   constructor(private readonly UserService: UserService) {}
@@ -93,8 +92,13 @@ export class UserController {
     return await this.UserService.getMe(id);
   }
 
-  async changePassword(@Body() email: string): Promise<SuccessDto> {
-    return await this.UserService.changePassword(email);
+  //change password
+  @Put('update')
+  async changePassword(
+    @Param() id: string,
+    @Body() body: UpdateDto,
+  ): Promise<SuccessDto> {
+    return await this.UserService.changePassword(id, body);
   }
 
   //user interesting

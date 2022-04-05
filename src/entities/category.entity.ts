@@ -13,10 +13,10 @@ export class Category {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ length: 50, type: 'varchar' })
-  name: string;
+  @Column({ type: 'varchar', nullable: false })
+  category_name: string;
 
-  @Column('varchar')
+  @Column({ type: 'text' })
   image: string;
 
   @ManyToOne(() => Book, (book) => book.category)

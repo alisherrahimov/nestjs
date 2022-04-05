@@ -7,7 +7,7 @@ const config: TypeOrmModuleOptions = {
   username: 'postgres',
   password: '1',
   database: 'bookstore',
-  synchronize: true,
+  synchronize: false,
   entities: ['dist/src/entities/*.entity.{js,ts}'],
 };
 export default config;

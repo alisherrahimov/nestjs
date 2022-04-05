@@ -26,7 +26,7 @@ export class CategoryService {
   ): Promise<Category> {
     try {
       const newCategory = this.category.create({
-        name: category.name,
+        category_name: category.name,
         image: image.path,
         book: null,
       });
@@ -58,7 +58,7 @@ export class CategoryService {
         unlinkSync(categoryToUpdate.image);
         categoryToUpdate.image = image.path;
       }
-      categoryToUpdate.name = category.name;
+      categoryToUpdate.category_name = category.name;
       return await this.category.save(categoryToUpdate);
     } catch (error) {
       throw new HttpException(error, 500);

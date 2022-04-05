@@ -7,6 +7,8 @@ import { JwtService } from '@nestjs/jwt';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import { SuccessDto } from './dto/success.dto';
+import { UpdateDto } from './dto/update.dto';
+
 @Injectable()
 export class UserService {
   constructor(
@@ -123,10 +125,16 @@ export class UserService {
       });
   }
 
-  //change password
-  async changePassword(email: string): Promise<SuccessDto> {
+  //change passwod
+  //hali ishlanmadi bi
+  async changePassword(id: string, body: UpdateDto): Promise<SuccessDto> {
     try {
-      const findUser = await this.user.findOne({ email: email });
+      const findUser = await this.user.findByIds([id]);
+
+      if (findUser.length == 0) {
+        return { message: 'User not found', success: false };
+      }
+
       return { message: 'Password changed successfully', success: true };
     } catch (error) {
       throw new HttpException('Internal Server Error', 500);

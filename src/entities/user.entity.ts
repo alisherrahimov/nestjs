@@ -2,6 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -13,13 +14,13 @@ export class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ length: 50, type: 'varchar' })
+  @Column({ type: 'text' })
   name: string;
 
-  @Column('varchar', { unique: true })
+  @Column({ unique: true, type: 'text' })
   email: string;
 
-  @Column('varchar')
+  @Column({ type: 'text' })
   password: string;
 
   @Column({ enum: ['user', 'admin'], default: 'user' })
@@ -28,33 +29,34 @@ export class User {
   @Column({ type: 'date' })
   born_date: Date;
 
-  @Column('varchar')
+  @Column({ type: 'text' })
   location: string;
 
-  @Column('varchar', {
+  @Column({
     nullable: true,
+    type: 'text',
     default:
       'https://png.pngtree.com/png-clipart/20190924/original/pngtree-user-vector-avatar-png-image_4830521.jpg',
   })
   avatar: string;
 
-  @OneToOne(() => Fovarite, (fovarite) => fovarite.id, {
+  @OneToMany(() => Fovarite, (fovarite) => fovarite.user, {
     nullable: true,
   })
   fovarite: Fovarite[];
 
-  @OneToOne(() => Review, (review) => review.user_id, {
+  @OneToMany(() => Review, (review) => review.user, {
     nullable: true,
   })
   review: Review[];
 
-  @Column('json', { nullable: true })
+  @Column({ type: 'json', nullable: true })
   interesting: string[];
 
-  @Column({ enum: ['male', 'female'], type: 'varchar' })
+  @Column({ enum: ['male', 'female'], type: 'text' })
   gender: string;
 
-  @Column({ type: 'varchar', default: 0, nullable: true })
+  @Column({ type: 'text', default: 0, nullable: true })
   amount: number;
 
   @CreateDateColumn()
